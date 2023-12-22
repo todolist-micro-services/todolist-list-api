@@ -52,7 +52,7 @@ public class UpdateListController {
         final User user = new User(Integer.parseInt(updateListRequest.getCreator()), "", "", "", "");
         final Project project = new Project(Integer.parseInt(updateListRequest.getProject()), "", "", LocalDateTime.now(), user);
         final todolist.database.dataType.List parent = updateListRequest.getParent().equals("null") ? null : new todolist.database.dataType.List(Integer.parseInt(updateListRequest.getParent()), "", "", null, null, null);
-        final todolist.database.dataType.List list = new todolist.database.dataType.List(0, updateListRequest.getName(), updateListRequest.getDescription(), parent, user, project);
+        final todolist.database.dataType.List list = new todolist.database.dataType.List(Integer.parseInt(updateListRequest.getId()), updateListRequest.getName(), updateListRequest.getDescription(), parent, user, project);
         final String dbResponse = this.dataInterface.updateProjectList(list);
         if (!dbResponse.isEmpty())
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"Internal server error\"}");

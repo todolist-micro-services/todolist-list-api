@@ -49,9 +49,10 @@ public class CreateListController {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"error\": \"Internal server error\"}");
+        final String formatOutput = String.format("{\"list\": \"%s\"}", String.valueOf(createdList.listId));
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(createdList.listId);
+                .body(formatOutput);
     }
 
     private ResponseEntity<Object> checkParameters(CreateListRequest createListRequest) {
