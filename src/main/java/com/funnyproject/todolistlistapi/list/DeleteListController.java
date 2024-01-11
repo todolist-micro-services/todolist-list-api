@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import todolist.database.DataInterface;
-import todolist.database.dataType.Event;
 import todolist.database.dataType.User;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.funnyproject.todolistlistapi.list;
 
 import com.funnyproject.todolistlistapi.AppConfig;
+import com.funnyproject.todolistlistapi.utils.CheckRight;
 import com.funnyproject.todolistlistapi.utils.InitDataInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,11 @@ public class CreateListController {
         final Project project = new Project(Integer.parseInt(createListRequest.getProject()), "", "", LocalDateTime.now(), user);
         final List parent = createListRequest.getParent().equals("null") ? null : new List(Integer.parseInt(createListRequest.getParent()), "", "", null, null, null);
         final List list = new List(0, createListRequest.getName(), createListRequest.getDescription(), parent, user, project);
+        if (!CheckRight.isLinkToProjectFomToken(authorization[1], project.projectId, dataInterface)) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("{\"error\": \"must be link to project\"}");
+        }
         final String dbResponse = this.dataInterface.createProjectList(list);
         if (!dbResponse.isEmpty())
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"Internal server error\"}");
